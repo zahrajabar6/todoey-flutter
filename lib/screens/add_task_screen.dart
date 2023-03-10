@@ -3,9 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todoey/models/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({super.key, required this.addTaskCallback});
-
-  final Function addTaskCallback;
+  const AddTaskScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -17,15 +17,7 @@ class TasksScreen extends StatelessWidget {
           elevation: 3,
           onPressed: () {
             showModalBottomSheet(
-                context: context,
-                builder: (context) => AddTaskScreen(
-                      addTaskCallback: (newTaskTiltle) {
-                        // setState(() {
-                        //   tasks.add(Task(name: newTaskTiltle));
-                        // });
-                        Navigator.pop(context);
-                      },
-                    ));
+                context: context, builder: (context) => const AddTaskScreen());
           },
           child: const Icon(Icons.add),
         ),
@@ -68,23 +60,55 @@ class TasksScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Container(
-                height: 300,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
+              child: Consumer<TaskData>(builder: (context, taskData, child) {
+                return Container(
+                  height: 300,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
                   ),
-                ),
-                child: const TasksList(),
-              ),
+                  child: taskData.taskCount == 0
+                      ? const NoTask()
+                      : const TasksList(),
+                );
+              }),
             ),
           ],
         ),
       ),
     );
+  }
+}
+
+class NoTask extends StatelessWidget {
+  const NoTask({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Icon(
+            Icons.add_card,
+            size: 100,
+            color: Colors.grey.shade300,
+          ),
+          Text(
+            "You don't have any task!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.grey.shade400,
+            ),
+          ),
+        ]);
   }
 }
